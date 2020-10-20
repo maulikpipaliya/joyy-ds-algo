@@ -79,29 +79,27 @@ public class Stack {
 
 
     public static void main(String[] args) {
-        Stack stack = new Stack(4);
+        int sCapacity = 4;
+        Stack stack = new Stack(sCapacity);
         System.out.println("\n----------STACK IMPLEMENTATION----------\n");        
 
+        long[] sData = {3,5,6,7,8};
         //stack.pop();
-        
-        stack.push(5);
-        stack.push(6);
-        stack.push(7);
-        stack.push(8);  
-        stack.push(8);
-        stack.push(3);
+        int iterPush = sData.length;
+        while(iterPush > 0){
+            stack.push(sData[iterPush]);
+            iterPush--;
+        }
         
         stack.displayStack();
+        
         System.out.println(stack.stackSize());
-
-        // stack.pop();
-        // stack.pop();
-        // stack.pop();
-        // stack.pop();
-        // stack.pop();
-        // stack.pop();
-
-        // stack.push(78);
+        
+        int iterPop = 3;
+        while(iterPop > 0){
+            stack.pop();
+            iterPop--;
+        }
 
         // System.out.println(stack.peek());
     }
