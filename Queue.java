@@ -87,11 +87,12 @@ public class Queue {
 
          queue.displayQueue();
          System.out.println();
-         queue.dequeue();
-         queue.dequeue();
-         queue.dequeue();
-         queue.dequeue();
-         queue.dequeue();
-         queue.dequeue();
+
+        int nIter = 11;
+        while(nIter > 0){
+            queue.dequeue();
+            nIter--;
+        }
+
     }
 }
