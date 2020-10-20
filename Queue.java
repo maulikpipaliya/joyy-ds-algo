@@ -14,30 +14,30 @@ public class Queue {
         this.arr = new long[capacity];
     }
 
-    public void enqueue(int data){
-        System.out.println("[INFO]: Enqueuing " + data);
+    public void enqueue(long data){
         if(!isQueueFull()) {
             arr[++rear] = data;
-            System.out.println("[SUCCESS]: Enqueued " + data);
+            System.out.println("[INFO]: Enqueued " + data);
             return;
         }
+        System.out.println("[INFO]: Enqueuing " + data);
         System.err.println("[ERROR]: Queue capacity("+ capacity +") full. Cannot enqueue the element " + data);
     }
 
     //Physical Queue
     public void dequeue(){
         // System.out.println(rear);
-        System.out.println("\n[INFO]: Dequeuing");
         long dequeuedElement = arr[0];
         if(!isQueueEmpty()){
             for (int i = front; i < rear; i++) {
                 arr[i] = arr[i+1];
             }
             rear--;
-            System.out.println("[INFO]: Dequeud " + dequeuedElement);
+            System.out.println("\n[INFO]: Dequeud " + dequeuedElement);
             displayQueue();
             return;
         }
+        System.out.println("\n[INFO]: Dequeuing");
         System.err.println("[ERROR]: Queue is empty. Cannot dequeue.");
 
     }
@@ -57,10 +57,9 @@ public class Queue {
     }
 
     public void displayQueue(){
-        System.out.println("----------------------------------------");
-        System.out.println("CURRENT QUEUE VIEW");
         
-        System.out.println("----------------------------------------");
+        System.out.println("\nCURRENT QUEUE VIEW");
+        System.out.println("------------------");
         
         if(!isQueueEmpty()){
             System.out.print("FRONT <   ");
@@ -77,14 +76,15 @@ public class Queue {
     }
 
     public static void main(String[] args) {
-         Queue queue = new Queue();
+        int qCapacity = 10;
+        Queue queue = new Queue(qCapacity);
 
-         queue.enqueue(5);
-         queue.enqueue(6);
-         queue.enqueue(7);
-         queue.enqueue(8);
-         queue.enqueue(9);
-         queue.enqueue(2);
+        long[] qData = {5,6,7,8,9,2,5,7,1,4};
+
+        for (int i = 0; i < qData.length; i++) {
+            queue.enqueue(qData[i]);
+        }
+
          queue.displayQueue();
          System.out.println();
          queue.dequeue();
