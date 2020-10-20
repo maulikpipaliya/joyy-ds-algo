@@ -1,36 +1,43 @@
 
 public class Queue {
 
-    private long[] arr = null;
-    int front = 0, rear = -1;
-    int capacity = 5;
+    private long[] queueArray = null;
+    int front, rear;
+    int qSize;
+    int maxSize = 5; // if not initialized
 
     public Queue(){
-        this.arr = new long[this.capacity];
+        this.queueArray = new long[this.maxSize];
+        front = 0;
+        rear = -1;
     }
 
-    public Queue(int capacity){
-        this.capacity = capacity;
-        this.arr = new long[capacity];
-    }
+    public Queue(int maxSize){
+        this.maxSize = maxSize;
+        this.queueArray = new long[maxSize];
+        front = 0;
+        rear = -1;
+        qSize = 0;
+    }   
 
-    public void enqueue(long data){
-        if(!isQueueFull()) {
-            arr[++rear] = data;
+    public void insert(long data){
+        if(!isFull()) {
+            queueArray[++rear] = data;
+            qSize++;
             System.out.println("[INFO]: Enqueued " + data);
             return;
         }
         System.out.println("[INFO]: Enqueuing " + data);
-        System.err.println("[ERROR]: Queue capacity("+ capacity +") full. Cannot enqueue the element " + data);
+        System.err.println("[ERROR]: Queue maxSize("+ maxSize +") full. Cannot enqueue the element " + data);
     }
 
     //Physical Queue
-    public void dequeue(){
+    public void remove(){
         // System.out.println(rear);
-        long dequeuedElement = arr[0];
-        if(!isQueueEmpty()){
+        long dequeuedElement = queueArray[0];
+        if(!isEmpty()){
             for (int i = front; i < rear; i++) {
-                arr[i] = arr[i+1];
+                queueArray[i] = queueArray[i+1];
             }
             rear--;
             System.out.println("\n[INFO]: Dequeud " + dequeuedElement);
@@ -38,22 +45,30 @@ public class Queue {
             return;
         }
         System.out.println("\n[INFO]: Dequeuing");
-        System.err.println("[ERROR]: Queue is empty. Cannot dequeue.");
+        System.err.println("[ERROR]: Queue is empty. Cannot remove.");
 
     }
 
+    public long peekFront(){
+        return queueArray[front];
+    }
+
     //Traditional Queue
-    public void dequeueTraditional(){
+    public void removeTraditional(){
         front++;
         displayQueue();
     }
 
-    public boolean isQueueFull(){
-        return (rear + 1 == capacity);
+    public boolean isFull(){
+        return (rear + 1 == maxSize);
     }
 
-    public boolean isQueueEmpty(){
+    public boolean isEmpty(){
         return (rear == -1);
+    }
+
+    public int size(){
+        return qSize;
     }
 
     public void displayQueue(){
@@ -61,10 +76,10 @@ public class Queue {
         System.out.println("\nCURRENT QUEUE VIEW");
         System.out.println("------------------");
         
-        if(!isQueueEmpty()){
+        if(!isEmpty()){
             System.out.print("FRONT <   ");
             for (int i = front; i <= rear; i++) {
-                System.out.print(arr[i] + " ");
+                System.out.print(queueArray[i] + " ");
             }
             
             System.out.println("  < REAR");
@@ -76,23 +91,29 @@ public class Queue {
     }
 
     public static void main(String[] args) {
-        int qCapacity = 10;
-        Queue queue = new Queue(qCapacity);
+        int qMaxSize = 10;
+        Queue queue = new Queue(qMaxSize);
 
-        long[] qData = {5,6,7,8,9,2,5,7,1,4};
+        long[] qData = {5,6,7,8,9,2,5,7,1,4,11};
 
         for (int i = 0; i < qData.length; i++) {
-            queue.enqueue(qData[i]);
+            queue.insert(qData[i]);
         }
 
-         queue.displayQueue();
-         System.out.println();
+        queue.displayQueue();
+
+        System.out.println();
 
         int nIter = 11;
         while(nIter > 0){
-            queue.dequeue();
+            queue.remove();
             nIter--;
         }
 
+        queue.remove();
+
     }
 }
+
+
+

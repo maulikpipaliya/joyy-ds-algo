@@ -1,34 +1,36 @@
 public class Stack {
 
-    private long[] arr = null;
-    private int capacity = 5;
+    private long[] stackArray = null;
+    private int maxSize = 5;
     private int top;
 
     public Stack(){
-        this.arr = new long[capacity]; 
+        this.stackArray = new long[maxSize]; 
+        top = -1;
+
     }
 
-    public Stack(int capacity){
-        this.capacity = capacity;
-        this.arr = new long[capacity]; 
+    public Stack(int maxSize){
+        this.maxSize = maxSize;
+        this.stackArray = new long[maxSize]; 
         top = -1;
     }
 
     public void push(long data){
         
         System.out.println("[INFO]: Pushing " + data);
-        if(!isStackFull()){
-            arr[++top] = data;
+        if(!isFull()){
+            stackArray[++top] = data;
             System.out.println("[INFO]: " + data + " pushed onto the stack");
         }
         else{
-            System.err.println("\n[ERROR]: StackOverflow : "+ data + " couldn't be pushed because stack size is maximum " + capacity +  ".\n");
+            System.err.println("\n[ERROR]: StackOverflow : "+ data + " couldn't be pushed because stack size is maximum " + maxSize +  ".\n");
         }
     }
 
     public long peek(){
         try{
-            return arr[top];
+            return stackArray[top];
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -40,9 +42,9 @@ public class Stack {
         System.out.println("----------------------------------------");
         
         // int poppedElement;
-        if(!isStackEmpty()){
+        if(!isEmpty()){
             System.out.println("[INFO]: Poping " + peek() + " from the stack");
-            long poppedElement = arr[top--];
+            long poppedElement = stackArray[top--];
             System.out.println("[INFO]: Popped element :  " + poppedElement);
             return poppedElement;                
         }
@@ -56,11 +58,11 @@ public class Stack {
         return top + 1;
     }
 
-    public boolean isStackFull(){
-        return (top + 1 == capacity);
+    public boolean isFull(){
+        return (top + 1 == maxSize);
     }
 
-    public boolean isStackEmpty(){
+    public boolean isEmpty(){
         return (top == -1);
     }
 
@@ -70,7 +72,7 @@ public class Stack {
         System.out.println("----------------------------------------");
         for (int i = top; i >= 0; i--) {
             System.out.print("|  ");
-            System.out.print(arr[i]);
+            System.out.print(stackArray[i]);
             System.out.println("   |");
         }
         
@@ -79,8 +81,8 @@ public class Stack {
 
 
     public static void main(String[] args) {
-        int sCapacity = 4;
-        Stack stack = new Stack(sCapacity);
+        int sMaxSize = 4;
+        Stack stack = new Stack(sMaxSize);
         System.out.println("\n----------STACK IMPLEMENTATION----------\n");        
 
         long[] sData = {3,5,6,7,8};
@@ -88,7 +90,7 @@ public class Stack {
         int iterPush = sData.length;
         while(iterPush > 0){
             stack.push(sData[iterPush]);
-            iterPush--;
+            iterPush--; 
         }
         
         stack.displayStack();
