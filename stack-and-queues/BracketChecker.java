@@ -43,15 +43,14 @@ class Stack {
     }
 
     public char pop() {
-        System.out.println("----------------------------------------");
         // System.out.println("top = " + top);
         char poppedElement = '\0';
         if (!(isEmpty())) {
             // System.out.println("[INFO]: Poping " + peek() + " from the stack");
             poppedElement = stackArray[top--];
-            System.out.println("[INFO]: Popped element :  " + poppedElement);
+            System.out.println("[INFO]: popped element :  " + poppedElement);
         } else {
-            System.out.println("[INFO]: Poping from the stack");
+            System.out.println("[INFO]: poping from the stack");
             System.err.println("[ERROR]: Stack Underflow - not able to pop, stack is already empty");
         }
         return poppedElement;
@@ -74,20 +73,20 @@ class Stack {
         System.out.println("\nCURRENT STACK VIEW");
         System.out.println("----------------------------------------");
 
+        System.out.print("TOP > ");
         if (!isEmpty()) {
             for (int i = top; i >= 0; i--) {
-                System.out.print("|  ");
                 System.out.print(stackArray[i]);
-                System.out.println("   |");
+                System.out.print("  ");
             }
-            System.out.println("````````");
+            System.out.println("> BOTTOM");
             return;
         }
         System.out.println("Stack is empty. Nothing to display :( ");
 
     }
 
-    public String convertToString(){
+    public String convertToString() {
         String str = "";
         if (!isEmpty()) {
             for (int i = top; i >= 0; i--) {
@@ -95,45 +94,53 @@ class Stack {
                 str += stackArray[i];
             }
         }
-        return str; 
+        return str;
     }
 }
 
-public class ReverseWord {
+public class BracketChecker {
     public static void main(String[] args) {
-        
-        System.out.println("\n----------STACK APPLICATION----------\n");
-      
-        String reverseStr = "";
+        String str = "a{b[c(f)}]d}e(";
+        char[] delimiters = { '{', '}', '[', ']', '(', ')' };
+        char[] delimitersOpening = { '{', '[', '(' };
+        char[] delimitersClosing = { '}', ']', ')' };
 
-        System.out.print("Enter string : ");
-        String str = getString();
-        int wordLength = str.length();
-        
-        System.out.println("Given String is : " + str);
+        int strLen = str.length();
+        Stack stack1 = new Stack(str.length());
 
-        Stack strCharStack = new Stack(wordLength);
-        Stack strWordCharStack = new Stack(wordLength);
-        
-        for (int i = 0; i < wordLength; i++) {
-            strCharStack.push(str.charAt(wordLength - i - 1));
+        char ch, poppedChar;
+        for (int i = 0; i < strLen; i++) {
+            ch = str.charAt(i);
+            if (new String(delimitersOpening).indexOf(ch) != -1) {
+                stack1.push(ch);
+            }
+
+            if (new String(delimitersClosing).indexOf(ch) != -1) {
+                System.out.println("[INFO]: next character in string is " + ch);
+                poppedChar = stack1.pop();
+
+                int delimiterIndex = new String(delimitersOpening).indexOf(poppedChar);
+                // System.out.println(delimiterIndex);
+
+                if(!stack1.isEmpty()){
+                    if (ch == delimitersClosing[delimiterIndex] && poppedChar == delimitersOpening[delimiterIndex]) {
+                        System.out.println("[INFO]: " + delimitersOpening[delimiterIndex] + " and " + delimitersClosing[delimiterIndex] + " matched");
+                    } else {
+                        System.err.println("\n[ERROR]: Should be " + delimitersClosing[delimiterIndex] + " but " + ch +  " found \n" );
+                    }
+                }
+            }
         }
-
-        strCharStack.displayStack();
         
-        for (int i = 0; i < wordLength; i++) {
-            strWordCharStack.push(strCharStack.pop());
-        }
+        stack1.displayStack();
 
-        strWordCharStack.displayStack();
+        if (!stack1.isEmpty())
+            System.out.println("\nBad String because good string keeps stack empty in the end!");
 
-        reverseStr = strWordCharStack.convertToString();
 
-        System.out.println("Reversed Word is : " + reverseStr);
-    
     }
 
-    public static String getString(){
+    public static String getString() {
         String str = "";
         try {
             InputStreamReader isr = new InputStreamReader(System.in);
@@ -144,5 +151,5 @@ public class ReverseWord {
         }
         return str;
     }
-    
+
 }
