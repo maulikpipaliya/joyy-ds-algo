@@ -1,4 +1,4 @@
-public class Stack {
+class Stack {
 
     private long[] stackArray = null;
     private int maxSize = 5;
@@ -67,43 +67,49 @@ public class Stack {
     }
 
     public void displayStack(){
-        System.out.println("----------------------------------------");
-        System.out.println("CURRENT STACK VIEW");
-        System.out.println("----------------------------------------");
-        for (int i = top; i >= 0; i--) {
-            System.out.print("|  ");
-            System.out.print(stackArray[i]);
-            System.out.println("   |");
-        }
         
-        System.out.println("````````");   
+        System.out.println("\nCURRENT STACK VIEW");
+        System.out.println("----------------------------------------");
+
+        if(!isEmpty()){
+            for (int i = top; i >= 0; i--) {
+                System.out.print("|  ");
+                System.out.print(stackArray[i]);
+                System.out.println("   |");
+            }
+            System.out.println("````````");   
+            return;
+        }
+        System.out.println("Stack is empty. Nothing to display :( ");
+        
     }
+}
 
-
-    public static void main(String[] args) {
+public class StackApp{
+        public static void main(String[] args) {
         int sMaxSize = 4;
         Stack stack = new Stack(sMaxSize);
-        System.out.println("\n----------STACK IMPLEMENTATION----------\n");        
+        System.out.println("\n----------STACK APPLICATION----------\n");        
 
-        long[] sData = {3,5,6,7,8};
+        long[] sData = {3,5,6,7};
         //stack.pop();
-        int iterPush = sData.length;
-        while(iterPush > 0){
+        int iterPush = 0;
+        
+        while(iterPush < sData.length){
             stack.push(sData[iterPush]);
-            iterPush--; 
+            iterPush++; 
         }
         
         stack.displayStack();
         
-        System.out.println(stack.stackSize());
+        System.out.println("Stack size is : " + stack.stackSize());
         
-        int iterPop = 3;
+        int iterPop = 4;
         while(iterPop > 0){
             stack.pop();
             iterPop--;
         }
-
-        // System.out.println(stack.peek());
+        stack.displayStack();
     }
 }
 
