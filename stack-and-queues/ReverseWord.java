@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 class Stack {
 
     private char[] stackArray = null;
@@ -83,39 +86,63 @@ class Stack {
         System.out.println("Stack is empty. Nothing to display :( ");
 
     }
+
+    public String convertToString(){
+        String str = "";
+        if (!isEmpty()) {
+            for (int i = top; i >= 0; i--) {
+                // System.out.print(stackArray[i]);
+                str += stackArray[i];
+            }
+        }
+        return str; 
+    }
 }
 
 public class ReverseWord {
     public static void main(String[] args) {
+        
         System.out.println("\n----------STACK APPLICATION----------\n");
-        
-        char[] sData = { 'j', 'o', 'y', 'y' };
-        int sDataLen = sData.length;
-        char[] sReverse = new char[sDataLen];
+      
+        String reverseStr = "";
 
-        Stack mainStack = new Stack(sDataLen);
-        int iterPush = 0;
+        System.out.println("Enter string : ");
+        String str = getString();
+        int wordLength = str.length();
+        
+        System.out.println("Given String is : " + str);
 
-        Stack reverseStack = new Stack(sDataLen);
-
+        Stack strCharStack = new Stack(wordLength);
+        Stack strWordCharStack = new Stack(wordLength);
         
-        // reverseStack.displayStack();
-        
-        System.out.println(sDataLen);
-        while (iterPush < sDataLen) {
-            mainStack.push(sData[iterPush]);
-            iterPush++;
-        }
-        
-        mainStack.displayStack();
-        
-        for (int i = 0; i < sReverse.length; i++) {
-                reverseStack.push(mainStack.pop());
-                // System.out.println(stack.pop());
+        for (int i = 0; i < wordLength; i++) {
+            strCharStack.push(str.charAt(wordLength - i - 1));
         }
 
-        reverseStack.displayStack();
+        strCharStack.displayStack();
+        
+        for (int i = 0; i < wordLength; i++) {
+            strWordCharStack.push(strCharStack.pop());
+        }
+
+        strWordCharStack.displayStack();
+
+        reverseStr = strWordCharStack.convertToString();
+
+        System.out.println("Reversed Word is : " + reverseStr);
     
-        // mainStack.displayStack();
     }
+
+    public static String getString(){
+        String str = "";
+        try {
+            InputStreamReader isr = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(isr);
+            str = br.readLine();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return str;
+    }
+    
 }
