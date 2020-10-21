@@ -100,7 +100,8 @@ class Stack {
 
 public class BracketChecker {
     public static void main(String[] args) {
-        String str = "a{b[c(f)}]d}e(";
+        // String str = "a{b[c(f)}]d}e(";
+        String str = "((2+4)*7)+3*(9–5)";
         char[] delimiters = { '{', '}', '[', ']', '(', ')' };
         char[] delimitersOpening = { '{', '[', '(' };
         char[] delimitersClosing = { '}', ']', ')' };
@@ -119,14 +120,14 @@ public class BracketChecker {
                 System.out.println("[INFO]: next character in string is " + ch);
                 poppedChar = stack1.pop();
 
-                int delimiterIndex = new String(delimitersOpening).indexOf(poppedChar);
-                // System.out.println(delimiterIndex);
+                int dIndex = new String(delimitersOpening).indexOf(poppedChar);
+                // System.out.println(dIndex);
 
                 if(!stack1.isEmpty()){
-                    if (ch == delimitersClosing[delimiterIndex] && poppedChar == delimitersOpening[delimiterIndex]) {
-                        System.out.println("[INFO]: " + delimitersOpening[delimiterIndex] + " and " + delimitersClosing[delimiterIndex] + " matched");
+                    if (ch == delimitersClosing[dIndex] && poppedChar == delimitersOpening[dIndex]) {
+                        System.out.println("[INFO]: " + delimitersOpening[dIndex] + " and " + delimitersClosing[dIndex] + " matched");
                     } else {
-                        System.err.println("\n[ERROR]: Should be " + delimitersClosing[delimiterIndex] + " but " + ch +  " found \n" );
+                        System.err.println("\n[ERROR]: Should be " + delimitersClosing[dIndex] + " but " + ch +  " found \n" );
                     }
                 }
             }
@@ -136,6 +137,8 @@ public class BracketChecker {
 
         if (!stack1.isEmpty())
             System.out.println("\nBad String because good string keeps stack empty in the end!");
+        else
+            System.out.println("\nGOOD STRING.");
 
 
     }
@@ -151,5 +154,4 @@ public class BracketChecker {
         }
         return str;
     }
-
 }
