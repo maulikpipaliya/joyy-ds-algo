@@ -93,34 +93,11 @@ class Queue {
         if (!isEmpty()) {
             System.out.print("FRONT <   ");
 
-            int tempMax = maxSize; 
-            for (int i = front; i < tempMax; i++) {
-                // System.out.print(queueArray[i] + " ");                    
-                // if(i == maxSize - 1){
-                    // i = 0;
-                    // tempMax = rear;
-                // }
+            for (int i = 0,j = front; i < qSize; i++)
+            {
+                System.out.print(queueArray[j] + " ");  
+                j = (j + 1) % maxSize;
             }
-
-            /*
-            8(10)
-            At this point, rear: 3 and front:5
-            index = 5 6 7 8 9 0 1 2 3 4 
-            */ 
-            // System.out.println( "lol" +qSize);
-            for (int j = front; j < tempMax;) {
-                System.out.print(j);
-                if(j == maxSize - 1) {
-                    j = (j + 1) % maxSize;
-                    tempMax = rear;
-                }
-                else{
-                    j++;
-                }
-                // System.out.print(()% maxSize + " ");
-            }
-
-        
 
             System.out.println("  < REAR");
         } else {
