@@ -52,7 +52,7 @@ class MergeSortArray {
             System.out.print(array[i] + " ");
         }
 
-        // i(L-Mid), j(Mid-R) -> j(L-R)
+        // i(L-Mid), j(Mid-R) -> k(L-R)
         int i = l;
         int j = m + 1;
         int k = l;
