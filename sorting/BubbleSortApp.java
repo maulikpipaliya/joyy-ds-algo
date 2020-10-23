@@ -39,6 +39,9 @@ class BubbleSortArray {
                     display();
                     sorted = false;
                 }
+                else{
+                    System.out.print("No swap\t");
+                }
                 
             }
             if (sorted) {
@@ -55,7 +58,10 @@ class BubbleSortArray {
 
     }
 
+    //Java - Pass by value only
     public void swap(long[] a, int x, int y) {
+        // x = x ^ y ^ (y = x);
+        //a[x] = a[x] ^ a[y] ^ (a[y] = a[x]);
         long temp = a[x];
         a[x] = a[y];
         a[y] = temp;
@@ -66,7 +72,8 @@ public class BubbleSortApp {
     public static void main(String[] args) {
         // final int maxSize = 5;
         
-        long[] a = { 11,21,20,30,4,5 };
+        // long[] a = { 8,3,8,6,9,9,6,6,8,5 };
+        long[] a = { 2,7,4,1,5,3 };
         int arrayLen = a.length;
         BubbleSortArray bSortArray = new BubbleSortArray(a.length);
         for (int i = 0; i < arrayLen; i++) {
