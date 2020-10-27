@@ -51,6 +51,58 @@ public class LinkedListApp {
         return sb.toString();
     }
 
+    public int getSize(){
+        return this.nElems;
+    }
+
+    public int getIndex(int data){
+        ListItem current = head;
+        ListItem prev = null;
+        int indexCopy = 0;
+        boolean isFound = false;
+        while(current != null && current.data != data){
+            if (current.data == data)  isFound = true;
+            prev = current;
+            current = current.next;
+            indexCopy++;
+        }
+        if(isFound) return indexCopy;
+        else{
+            System.err.println("[ERROR]: No index with value " + data + " could be found");
+            return Integer.MIN_VALUE;
+        }
+    }
+
+    public LinkedListApp getAllIndices(int data){
+        LinkedListApp indices = new LinkedListApp();
+        ListItem current = head;
+        ListItem prev = null;
+        
+        int iter = 0;
+
+        while(current != null ){
+            prev = current;
+            if(current.data == data){
+                indices.insertAtLast(iter);
+            }
+            iter++;
+            current = current.next;
+        }
+        return indices;          
+    } 
+
+    public int getDataOnIndex(int index){
+        ListItem current = head;
+        int i = 0;
+        while(current!=null){
+            if(i == index) return current.data;
+            i++;
+            current = current.next;
+        }
+        System.err.println("[ERROR]: No index found, returning garbage value");
+        return Integer.MIN_VALUE;
+    }
+
     public void insert(int data){
         ListItem newListItem =  new ListItem(data);
         if(head == null){
@@ -172,75 +224,32 @@ public class LinkedListApp {
         System.err.println("[INFO]: Removing item from front");
         this.removeAtIndex(0);
     }
+    
     public void removeFromLast(){
         System.err.println("[INFO]: Removing item from last");
         this.removeAtIndex(nElems - 1);
     }
+    
     public void removeBeforeListItem(int index_data){
         System.err.println("[INFO]: Removing an item before the value " +  index_data);
         int i = this.getIndex(index_data);
         this.removeAtIndex(i - 1);
     }
+    
     public void removeAfterListItem(int index_data){
         System.err.println("[INFO]: Removing an item after the value " +  index_data);
         int i = this.getIndex(index_data);
         this.removeAtIndex(i + 1);
     }
+    
     public void removeBeforeIndex(int index){
         System.out.println("[INFO]: Removing an item before an index " + index);
         this.removeAtIndex(index - 1);
     }
+    
     public void removeAfterIndex(int index){
         System.out.println("[INFO]: Removing an item after an index " + index);
         this.removeAtIndex(index + 1);
-    }
-
-    public int getIndex(int data){
-        ListItem current = head;
-        ListItem prev = null;
-        int indexCopy = 0;
-        boolean isFound = false;
-        while(current != null && current.data != data){
-            if (current.data == data)  isFound = true;
-            prev = current;
-            current = current.next;
-            indexCopy++;
-        }
-        if(isFound) return indexCopy;
-        else{
-            System.err.println("[ERROR]: No index with value " + data + " could be found");
-            return Integer.MIN_VALUE;
-        }
-    }
-
-    public LinkedListApp getAllIndices(int data){
-        LinkedListApp indices = new LinkedListApp();
-        ListItem current = head;
-        ListItem prev = null;
-        
-        int iter = 0;
-
-        while(current != null ){
-            prev = current;
-            if(current.data == data){
-                indices.insertAtLast(iter);
-            }
-            iter++;
-            current = current.next;
-        }
-        return indices;          
-    } 
-
-    public int getDataOnIndex(int index){
-        ListItem current = head;
-        int i = 0;
-        while(current!=null){
-            if(i == index) return current.data;
-            i++;
-            current = current.next;
-        }
-        System.err.println("[ERROR]: No index found, returning garbage value");
-        return Integer.MIN_VALUE;
     }
 
     public void removeWithData(int data){
@@ -248,10 +257,6 @@ public class LinkedListApp {
         System.out.println("[INFO]: Removing first instance of ListItem when "+ data + " is found (on Index "+ i+  ")");
         this.removeAtIndex(i);
         System.out.println("[INFO]: Removed first instance of ListItem when "+ data + " was found");
-    }
-    
-    public int getSize(){
-        return this.nElems;
     }
     
     public void removeWithDataAll(int data){
@@ -283,13 +288,35 @@ public class LinkedListApp {
         }
     }
 
-
-    public LinkedListApp (){
-
+    //Other utility functions
+    public LinkedListApp getCopyOfLL(){
+        LinkedListApp LLCopied = new LinkedListApp();
+        // ListItem current = head;
+        for (ListItem current = this.head; current != null; current = current.next) {
+            LLCopied.insertAtLast(current.data);
+        }
+        return LLCopied;
     }
 
+    public boolean clearList(){
+        if(this.head.next == null) return true;
+        else {
+            this.head.next = null;
+            this.head = this.tail = null;
+            this.nElems = 0 ;
+            return true;
+        }
+    }
 
+    public LinkedListApp getSubList(int start, int end){
+        LinkedListApp subList = new LinkedListApp();
+        
+        for (int i = start; i < end; i++) {
+            subList.insertAtLast(this.getDataOnIndex(i));
+        }
 
+        return subList;
+    }
    
     public static void main(String[] args) {
         LinkedListApp list = new LinkedListApp();
@@ -306,12 +333,23 @@ public class LinkedListApp {
 
         System.out.println();
         // list.insertAtIndex(1, 43);
-        // list.removeAtIndex(0);
+        // list.removeAtIndex(0)
         list.removeWithDataAll(35); // deletes the first instance
         // list.insertAtFront(85);
         // list.insertAtLast(87);
         System.out.println(list.getIndex(40));
+
+        LinkedListApp copiedLL = list.getCopyOfLL();
+        LinkedListApp extra = list.getSubList(1,3);
+
         
+        System.out.println("base LL: " + list);
+        System.out.println("copied LL: " + copiedLL);
+        System.out.println("extra: " + extra);
+        // extra.clearList();
+        System.out.println("extra: " + extra);
+
+        System.out.println();
         // list.insertBeforeListItem(34, 99); //before 1st instance found
         // list.insertAfterListItem(34, 75);
 
