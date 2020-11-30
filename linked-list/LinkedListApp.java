@@ -314,9 +314,35 @@ public class LinkedListApp {
         for (int i = start; i < end; i++) {
             subList.insertAtLast(this.getDataOnIndex(i));
         }
-
         return subList;
     }
+
+    public LinkedListApp getReversedList(){
+        LinkedListApp reversedList = new LinkedListApp();
+        int i = 1;
+        for (ListItem current = head; current != null; current = current.next) {
+            reversedList.insertAtLast(this.getDataOnIndex(this.getSize()- i++));
+            // System.out.println(this.getDataOnIndex(this.getSize() - i++));
+        }
+        return reversedList;
+    }   
+
+    public LinkedListApp appendAndGetList(LinkedListApp listToAppend){
+        LinkedListApp merged = new LinkedListApp();
+        merged = this.getCopyOfLL();
+        ListItem current = this.head;
+        while(current != null){
+            current = current.next;
+        }
+
+        merged.tail.next =  listToAppend.head;
+        return merged;
+    }
+
+    // public void doRevereseInPlace(){
+        
+    // }
+
    
     public static void main(String[] args) {
         LinkedListApp list = new LinkedListApp();
@@ -339,17 +365,24 @@ public class LinkedListApp {
         // list.insertAtLast(87);
         System.out.println(list.getIndex(40));
 
-        LinkedListApp copiedLL = list.getCopyOfLL();
         LinkedListApp extra = list.getSubList(1,3);
-
         
+        
+        
+        
+        LinkedListApp copiedLL = list.getCopyOfLL();
         System.out.println("base LL: " + list);
-        System.out.println("copied LL: " + copiedLL);
+        LinkedListApp reverseList = list.getReversedList();
+        System.out.println("reverse: " + reverseList);
         System.out.println("extra: " + extra);
         // extra.clearList();
         System.out.println("extra: " + extra);
-
+        
         System.out.println();
+        System.out.println("copied LL: " + copiedLL);
+        // copiedLL.doRevereseInPlace();
+        LinkedListApp newMerged = copiedLL.appendAndGetList(extra);
+        System.out.println("copied LL: " + newMerged);
         // list.insertBeforeListItem(34, 99); //before 1st instance found
         // list.insertAfterListItem(34, 75);
 
