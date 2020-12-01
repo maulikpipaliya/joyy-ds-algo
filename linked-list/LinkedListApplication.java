@@ -196,18 +196,28 @@ class LinkedList {
 
     //Returns the element at the specified position in this list.
     public int get(int index) {
+        
         ListItem current = head;
 
         if (index < 0 || index > this.size()) {
             System.err.println("[ERROR] : Invalid index provided.");
             return Integer.MIN_VALUE;
         }
+        return getListItem(index).data;
+    }
+
+    public ListItem getListItem(int index) {
+        ListItem current = head;
+
+        if (index < 0 || index > this.size()) {
+            System.err.println("[ERROR] : Invalid index provided.");
+            return null;
+        }
         int counter = 0;
         while (current != null && counter++ < index) {
             current = current.next;
         }
-
-        return current.data;
+        return current;
     }
 
 
@@ -413,7 +423,8 @@ class LinkedList {
 
     //Replaces the element at the specified position in this list with the specified element.
     public void set(int index,int data){
-
+        ListItem item = this.getListItem(index);
+        item.setListItemData(data);
     }
 
     public int size() {
@@ -454,6 +465,8 @@ class LinkedList {
     }
 
 }
+
+
 
 public class LinkedListApplication {
     public static void main(String[] args) {
@@ -511,7 +524,9 @@ public class LinkedListApplication {
             System.out.println(i);
         }
         System.out.println(arr);
-        // System.out.println(list);
-
+        System.out.println(list);
+        list.set(3, 101);
+        list.add(15, 150);
+        System.out.println(list);
     }
 }
