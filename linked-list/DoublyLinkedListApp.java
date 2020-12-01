@@ -51,22 +51,22 @@ class DoublyLinkedList {
     }
 
     public void add(int index, int data) {
-        if (index <= 0)
+        if (index <= 0) {   
+            System.out.println("[WARN] : Given index " + index + " is less than 0. Thus setting it to " + 0);
             index = 0;
+        }
         if (index >= this.size()) {
             System.out.println("[WARN] : Given index " + index + " is greater than the size of the list. Thus setting it to " + this.size());
             index = this.size();
         }
 
-    
-        System.out.println("[INFO] : Inserting "+ data + " on index " + index);
+        System.out.println("[INFO] : Inserting " + data + " on index " + index);
         ListItem newListItem = new ListItem(data);
         //if the list is empty
         if (this.size() == 0 && head == null) {
             head = tail = newListItem;
-        }
-        else {
-        
+        } else {
+            
             ListItem current = head;
             int indexCopy = 0;
             ListItem tempPrevious = null;
@@ -74,43 +74,62 @@ class DoublyLinkedList {
                 tempPrevious = current;
                 current = current.next;
             }
-
-            System.out.println("[INFO] : Currently, data on index "+index+" is: " + current);
+            
+            System.out.println("[INFO] : Currently, data on index " + index + " is: " + current);
             
             if (index == this.size()) {
-                System.out.println("[INFO] : Currently, data on previous index " + (index - 1) + " is: " + tempPrevious);
-
-                tempPrevious.next = newListItem;
-                newListItem.prev = tempPrevious;
-                tail = tempPrevious;
-            }
-            else if (index == 0) {
+                System.out
+                        .println("[INFO] : Currently, data on previous index " + (index - 1) + " is: " + tempPrevious);
+                        tempPrevious.next = newListItem;
+                        newListItem.prev = tempPrevious;
+                        tail = tempPrevious;
+            } else if (index == 0) {
                 newListItem.next = head;
                 head.prev = newListItem;
-                head = newListItem;            
-            }
-            else {    
+                head = newListItem;
+            } else {
                 current.prev.next = newListItem;
                 newListItem.next = current;
                 newListItem.prev = current.prev;
                 current.prev = newListItem;
             }
-
-
-            // current.prev.next = newListItem;
-            // newListItem.next = current.next;
-            
-            System.out.println("-----");
-            System.out.println(head);
-            System.out.println(tail);
-
-            // current = null;
-            
-            // System.out.println(indexCopy);
-            // System.out.println(head);
         }
-  
+        
+    }
+    
+    public void remove(int index) {
+        if (index <= 0) {   
+            System.out.println("[WARN] : Given index " + index + " is less than 0. Thus setting it to " + 0);
+            index = 0;
+        }
+        if (index >= this.size()) {
+            System.out.println("[WARN] : Given index " + index
+            + " is greater than the size of the list. Thus setting it to " + (this.size() - 1));
+            index = this.size() - 1;
+        }
+        
+        System.out.println("[INFO] : Removing item on index " + index);
+        
+        
+        if (index == 0) {
+            head = head.next;
+            head.prev = null;
+        }
+        else if (index == this.size() - 1) {
+            tail = tail.prev;
+            tail.next = null;
+        }
+        else {
+            int indexCopy = 0;
+            ListItem current = head;
+            while (current != null && indexCopy++ < index) {
+                current = current.next;
+            }
+            System.out.println("[INFO] : This item is being removed. " + current );
 
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+        }
         
     }
     
@@ -171,7 +190,7 @@ public class DoublyLinkedListApp {
         list.add(29);
         list.add(30);
         System.out.println(list);
-        list.add(-8, 101);
+        list.remove(2);
         System.out.println("\n\n\n");
         System.out.println(list);
         System.out.println("\n\n\n");
