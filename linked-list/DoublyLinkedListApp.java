@@ -14,22 +14,22 @@ class DoublyLinkedList {
             StringBuilder sb = new StringBuilder();
 
             try {
-                sb.append("{ PrevItem:  ");
+                sb.append("[ ");
                 if(!(this.prev == null))    
                     sb.append(this.prev.data);
                 else{
                     sb.append("null");
                 }
-                sb.append(", ListItem:  ");
+                sb.append(" <- ( ");
                 sb.append(this.data);
                 // sb.append("\t");
-                sb.append(", NextListItem : ");
+                sb.append(" ) -> ");
 
                 if(!(this.next == null))
                     sb.append(this.next.data);
                 else
                     sb.append("null");
-                sb.append("}");
+                sb.append(" ]");
             } catch (Exception e) {
                 sb.append(e.getMessage());
             }
