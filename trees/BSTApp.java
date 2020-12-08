@@ -1,3 +1,5 @@
+import java.util.*;
+
 /*
 Inserting an element into a tree
 • Deleting an element from a tree
@@ -18,9 +20,9 @@ class BinaryTree {
     int nElems;
 
     class BTNode {
-        private int data;
-        private BTNode leftChild;
-        private BTNode rightChild;
+         int data;
+         BTNode leftChild;
+         BTNode rightChild;
 
         public BTNode(int data) {
             this.data = data;
@@ -68,36 +70,147 @@ class BinaryTree {
             this.leftChild = node;
         }
 
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+
+            if(this.leftChild != null )
+                sb.append(this.leftChild.data + "->");
+            else
+                sb.append("null" + "->");
+
+            sb.append(this.data);
+
+            if (this.rightChild != null) {
+                sb.append("<-" + this.rightChild.data);
+            }
+            else {
+                sb.append("<-" + "null");
+                
+            }
+            sb.append("\n");
+            return sb.toString();
+        }
     }
 
-    public void insertBTNode(int data){
-        
+    public void insertBTNode(int data) {
+
         if (root == null) {
             root = new BTNode(data);
             return;
-        }
-        else {
+        } else {
             BTNode current = root;
-            BTNode parent = null;
+            BTNode parent;
 
             while (true) {
+
                 parent = current;
 
-                if (data < parent.data) {
+                if (data < current.data) {
                     current = current.leftChild;
                     if (current == null) {
                         parent.leftChild = new BTNode(data);
+                        return;
                     }
-                }
-                else {
+                } else {
                     current = current.rightChild;
                     if (current == null) {
-                        current.rightChild = new BTNode(data);
+                        parent.rightChild = new BTNode(data);
+                        return;
                     }
                 }
-                
+
             }
         }
+    }
+    
+
+    //Time Complexity: O(n). Space Complexity: O(n)
+    //DLR = PreOrder
+    void preOrder(BTNode r) {
+        if (r != null) {
+            System.out.print(r.data + ",");
+            preOrder(r.leftChild);
+            preOrder(r.rightChild);
+        }
+    }
+
+
+    //LDR = InOrder
+    void inOrder(BTNode r) {
+        if (r != null) {
+            inOrder(r.leftChild);
+            System.out.print(r.data + ",");
+            inOrder(r.rightChild);
+        }
+    }
+    
+    
+    // LRD = PostOrder
+    void postOrder(BTNode r) {
+        if (r != null) {
+            postOrder(r.leftChild);
+            postOrder(r.rightChild);
+                  
+            System.out.print(r.data + ",");
+        }
+    }
+
+
+    //DLR = PreOrder
+    //Time Complexity: O(n). Space Complexity: O(n)
+    public ArrayList<Integer> preOrderIterative() {;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        if (root == null)
+            return list;
+
+        Stack<BTNode> treeStack = new Stack<BTNode>();
+
+        treeStack.push(root);
+        
+        while(!treeStack.isEmpty()){
+            BTNode temp = treeStack.pop();
+            list.add(temp.data);
+            
+            if(temp.rightChild != null){
+                treeStack.push(temp.rightChild);
+            }
+            // right subtree will be pushed first and left subtree will be pushed later. 
+            // This way left subtree will be popped first and saved in the array.
+            if (temp.leftChild != null) {
+                treeStack.push(temp.leftChild);
+            }
+        }   
+        return list;
+    }
+    
+    //LDR = InOrder
+    public ArrayList<Integer> inOrderIterative() {
+        ArrayList<Integer> list = new ArrayList<>();
+
+        if( root == null) return list;
+
+
+        Stack<BTNode> treeStack = new Stack<BTNode>();
+        treeStack.push(root);
+        while (!treeStack.isEmpty()) {
+            BTNode temp = treeStack.pop();
+            if (temp.leftChild != null) {
+                treeStack.push(temp.leftChild);
+                list.add(temp.leftChild.data);
+            }
+            // treeStack.push(temp);
+            // list.add(temp.data);
+            if (temp.rightChild != null) {
+                treeStack.push(temp.rightChild);
+                list.add(temp.rightChild.data);
+            }
+            
+            // list.add(temp.data);
+        }
+
+        return list;
     }
 
     @Override
@@ -123,10 +236,33 @@ public class BSTApp {
         // Program run
         System.out.println("Hello");
         BinaryTree binaryTree = new BinaryTree();
-        binaryTree.insertBTNode(8);
-        binaryTree.insertBTNode(9);
-        binaryTree.insertBTNode(10);
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        int[] a = { 8, 3, 10, 36, 14, 22,1, 4 };
+
+        for (int i : a) {
+            binaryTree.insertBTNode(i);
+        }
+        
         System.out.println(binaryTree);
+
+        
+        System.out.println("------------");
+        // System.out.println(binaryTree.preOrderIterative());
+        // binaryTree.preOrder(binaryTree.root);
+        System.out.println("PreOrder Traversal");
+        binaryTree.preOrder(binaryTree.root);
+        System.out.println();
+        System.out.println(binaryTree.preOrderIterative());
+        System.out.println();
+        System.out.println("InOrder Traversal");
+        binaryTree.inOrder(binaryTree.root);
+        System.out.println();
+        System.out.println(binaryTree.inOrderIterative());
+        System.out.println();
+        System.out.println("PostOrder Traversal");
+        binaryTree.postOrder(binaryTree.root);
+        System.out.println();
+        System.out.println();
 
     }
 }
