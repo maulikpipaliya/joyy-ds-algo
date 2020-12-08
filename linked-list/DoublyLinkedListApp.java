@@ -2,7 +2,7 @@ class DoublyLinkedList {
     class ListItem {
         private int data;
         private ListItem next;
-        private ListItem prev;
+        private ListItem pr;
 
         public ListItem(int data) {
             this.data = data;
