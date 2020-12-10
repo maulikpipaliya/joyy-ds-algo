@@ -96,6 +96,10 @@ class BinaryTree {
 
     public void insertBTNode(int data) {
 
+        //Discard Duplicate Values
+        if (this.contains(root, data))
+            return;
+            
         if (root == null) {
             root = new BTNode(data);
             return;
@@ -107,6 +111,7 @@ class BinaryTree {
 
                 parent = current;
 
+                //goes to left subtree
                 if (data < current.data) {
                     current = current.leftChild;
                     if (current == null) {
@@ -114,66 +119,108 @@ class BinaryTree {
                         return;
                     }
                 } else {
+                //goes to right subtree
                     current = current.rightChild;
                     if (current == null) {
                         parent.rightChild = new BTNode(data);
                         return;
                     }
                 }
-
             }
         }
     }
-    
 
-    //Time Complexity: O(n). Space Complexity: O(n)
-    //DLR = PreOrder
-    void preOrder(BTNode r) {
+    /*
+    
+           5
+         3   7
+        1 4 6 8
+    PreOrder  = DLR = 5,3,1,4,7,6,8
+    Inorder   = LDR = 1,3,4,5,6,7,8 = sorted
+    PostOrder = LRD = 1,4,3,6,8,7,5
+    
+    */
+    
+    public BTNode findBTNodeWithData(BTNode r, int data) {
+        if (r == null)
+            return null;
+        
+            System.out.println(r);
+
+        
+        while (r.data != data) {
+            if (data < r.data) {
+                r = r.getLeftBTNode();
+            }
+            else {
+                r = r.getRightBTNode();
+            }
+        }
+        return r;
+        /*
+        
+        if (r != null) {
+            if (r.data == data) {
+                return r;
+            }
+            contains(r.leftChild, data);
+            contains(r.rightChild, data);
+        }
+        return null;
+        */
+    }
+        
+        public boolean contains(BTNode r, int data) {
+        return (findBTNodeWithData(r, data) != null) ? true : false;
+        }
+        
+        //Time Complexity: O(n). Space Complexity: O(n)
+        //DLR = PreOrder
+        void preOrder(BTNode r) {
         if (r != null) {
             System.out.print(r.data + ",");
             preOrder(r.leftChild);
             preOrder(r.rightChild);
         }
-    }
-
-
-    //LDR = InOrder
-    void inOrder(BTNode r) {
+        }
+        
+        //LDR = InOrder
+        void inOrder(BTNode r) {
         if (r != null) {
             inOrder(r.leftChild);
             System.out.print(r.data + ",");
             inOrder(r.rightChild);
         }
-    }
-    
-    
-    // LRD = PostOrder
-    void postOrder(BTNode r) {
+        }
+        
+        
+        // LRD = PostOrder
+        void postOrder(BTNode r) {
         if (r != null) {
             postOrder(r.leftChild);
             postOrder(r.rightChild);
                   
             System.out.print(r.data + ",");
         }
-    }
-
-
-    //DLR = PreOrder
-    //Time Complexity: O(n). Space Complexity: O(n)
-    public ArrayList<Integer> preOrderIterative() {;
+        }
+        
+        
+        //DLR = PreOrder
+        //Time Complexity: O(n). Space Complexity: O(n)
+        public ArrayList<Integer> preOrderIterative() {;
         ArrayList<Integer> list = new ArrayList<Integer>();
         if (root == null)
             return list;
-
+        
         Stack<BTNode> treeStack = new Stack<BTNode>();
-
+        
         treeStack.push(root);
         
-        while(!treeStack.isEmpty()){
+        while (!treeStack.isEmpty()) {
             BTNode temp = treeStack.pop();
             list.add(temp.data);
-            
-            if(temp.rightChild != null){
+        
+            if (temp.rightChild != null) {
                 treeStack.push(temp.rightChild);
             }
             // right subtree will be pushed first and left subtree will be pushed later. 
@@ -181,7 +228,13 @@ class BinaryTree {
             if (temp.leftChild != null) {
                 treeStack.push(temp.leftChild);
             }
-        }   
+        }
+        /*
+        
+        Full-stack = 5, 7, 3, 4, 1, 8, 6 
+        list = 5, 3, 1, 4, 7, 6, 8
+        */
+        
         return list;
     }
     
@@ -237,7 +290,10 @@ public class BSTApp {
         System.out.println("Hello");
         BinaryTree binaryTree = new BinaryTree();
         ArrayList<Integer> arr = new ArrayList<Integer>();
-        int[] a = { 8, 3, 10, 36, 14, 22,1, 4 };
+        
+        //Adding root node
+        binaryTree.insertBTNode(5);
+        int[] a = {5,3,1,4,7,6,8};
 
         for (int i : a) {
             binaryTree.insertBTNode(i);
@@ -263,6 +319,9 @@ public class BSTApp {
         binaryTree.postOrder(binaryTree.root);
         System.out.println();
         System.out.println();
+
+        System.out.println("------------");
+        System.out.println(binaryTree.findBTNodeWithData(binaryTree.root, 15));
 
     }
 }
