@@ -1,15 +1,16 @@
 import java.math.*;
 
 class HashTable {
-    int[] HashArray;
+    int[][] HashArray;
     int tblSize;
 
     public HashTable(int l) {
         this.tblSize = l;
-        this.HashArray = new int[tblSize];
+        this.HashArray = new int[tblSize][2];
 
         for (int i = 0; i < HashArray.length; i++) {
-            HashArray[i] = Integer.MIN_VALUE;
+            HashArray[i][0] = Integer.MIN_VALUE;
+            HashArray[i][1] = 0; // 0 - unvisited 1- deleted 
         }
         this.display(); // to test initial array
     }
@@ -21,11 +22,14 @@ class HashTable {
     public int getSize() {
         int c = 0;
         for (int i = 0; i < HashArray.length; i++)
-            if (HashArray[i] != Integer.MIN_VALUE)
+            if (HashArray[i][0] != Integer.MIN_VALUE && HashArray[i][1] == 0)
                 c++;
         return c;
     }
 
+
+    //rehashing
+    
     public void insertLinearProbing(int number) {
         if (isFull()) {
             System.out.println("[ERROR]: ArrayOverflow");
@@ -36,15 +40,15 @@ class HashTable {
 
         System.out.println(number + "%" + tblSize + "=" + index);
 
-        while (HashArray[index] != Integer.MIN_VALUE) {
+        while (HashArray[index][0] != Integer.MIN_VALUE && HashArray[index][1] == 0) {
             index = (index + 1) % tblSize; // wrapping up
         }
-        HashArray[index] = number;
-
+        HashArray[index][0] = number;
+        HashArray[index][1] = 0;
     }
 
     public void insertDoubleHashing(int number) {
-        
+
         if (isFull()) {
             System.out.println("[ERROR]: ArrayOverflow");
             return;
@@ -53,22 +57,48 @@ class HashTable {
         int h1 = index;
         int h2 = HashTable.getPrevPrime(tblSize) - (number % HashTable.getPrevPrime(tblSize));
         int i = 0;
-        int h = (h1 + i * h2) % tblSize; 
-        while (HashArray[h] != Integer.MIN_VALUE) {
+        int h = (h1 + i * h2) % tblSize;
+
+        while (HashArray[h][0] != Integer.MIN_VALUE && HashArray[h][1] == 0) {
             i++;
             h = (h1 + i * h2) % tblSize;
-
         }
-        HashArray[h] = number;        
-        
+
+        HashArray[h][0] = number;
+
         System.out.println(number + "%" + tblSize + "=" + h);
 
     }
 
+    public void deleteElement(int number) {
+        //here element will be deleted.
+        
+        //find the element
+        int index = number % tblSize;
+ 
+        while ((HashArray[index][0] != number)) {
+            index = (index + 1) % tblSize;
+        }
+
+        System.out.println("----" + HashArray[index][0] + "@" + index);
+        HashArray[index][0] = Integer.MIN_VALUE;
+        HashArray[index][1] = 1;
+
+
+
+        
+        if (HashArray[index][1] == 1) 
+            System.out.print(": ");
+        else
+            System.out.print("Element found: ");
+        System.out.println(HashArray[index][0]);
+
+    }
+
     public void display() {
-        for (int i : HashArray) {
-            if (i != Integer.MIN_VALUE) {
-                System.out.println(i);
+        for (int i = 0; i < HashArray.length; i++) {
+            if (HashArray[i][0] != Integer.MIN_VALUE && HashArray[i][1] == 0) {
+                System.out.println(HashArray[i][0]);
             } else {
                 System.out.println("--");
             }
@@ -140,21 +170,25 @@ public class HashingApp {
 
         System.out.println("Hashing App");
         System.out.println("-----------");
-        int[] arr = { 21, 42, 31, 12, 54, 20, 28 };
+        int[] arr = { 21, 42, 31, 19, 12, 54,30, 20, 28 };
 
         
         HashTable ht = new HashTable(HashTable.getNextPrime(arr.length));
 
         System.out.println("[INFO] : DOUBLE HASHING");
         for (int i : arr) {
-            // ht.insertLinearProbing(i);
-            ht.insertDoubleHashing(i);
+            ht.insertLinearProbing(i);
+            // ht.insertDoubleHashing(i);
         }
 
         System.out.println("\n\n\nDISPLAY ----");
         ht.display();
         
-        System.out.println(HashTable.getPrevPrime(105));
-        System.out.println(HashTable.getNextPrime(7));
+        ht.deleteElement(54);
+        ht.deleteElement(30);
+        ht.deleteElement(45);
+        
+        ht.display();
+        
     }
 }
