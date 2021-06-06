@@ -1,0 +1,31 @@
+Competitive Programming In Java
+Gaurav Sen 
+https://www.youtube.com/playlist?list=PLMCXHnjXnTnsWU7jYp9XCKPW8ayl6D8fb
+
+
+
+1. Make program testable
+
+
+10^8 ops = 1 second -> 
+
+n = 10^7 = O(n)
+n = 10^6 = O(n * log n )
+n = 10^4 = O(n^2)
+
+
+Correctness
+ - Check overflows, "final" declaration for required data types
+ - avoid Object creation 
+ - Scanner slows down, use InputReader
+ - avoid too many static functions 
+
+Efficiency
+ - use library functions as much as possible
+ - write freaking jUnit @Test-ing
+ - assertEquals("RESULT", functionToCall())
+
+Debuggability 
+ - avoid too many global variables 
+ - Separate logic from Pre-processing
+ - variable/function pneumonics must make sense

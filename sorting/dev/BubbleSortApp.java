@@ -70,10 +70,7 @@ class BubbleSortArray {
 
 public class BubbleSortApp {
     public static void main(String[] args) {
-        // final int maxSize = 5;
-        
-        // long[] a = { 8,3,8,6,9,9,6,6,8,5 };
-        // long[] a = { 2,7,4,1,5,3 };
+ 
         long[] a = { 6, 4, 9, 3, 5, 8 };
         int arrayLen = a.length;
         BubbleSortArray bSortArray = new BubbleSortArray(a.length);
