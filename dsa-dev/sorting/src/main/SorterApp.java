@@ -4,7 +4,6 @@
  * SorterApp
  */
 
-package main;
 
 import util.Utils;
 import interfaces.Sortable;
@@ -20,7 +19,7 @@ public class SorterApp {
     }
 
     private void run() {
-        sort(new Integer[] { 100, 45, 15, 95, 4, 7, 3, 1 });
+        sort(new Integer[] { 100,43,78,4,65, 45, 15, 95, 4, 7, 3, 1 });
     }
 
     private <T extends Comparable<? super T>> void sort(T[] values) {

@@ -4,5 +4,8 @@
         "**/.project": true,
         "**/.settings": true,
         "**/.factorypath": true
-    }
+    },
+    "java.project.sourcePaths": [
+        "dsa-dev/sorting/lala/sorting-lala/src"
+    ]
 }
