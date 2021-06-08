@@ -26,7 +26,7 @@ public class SorterApp {
     private <T extends Comparable<? super T>> void sort(T[] values) {
         Sortable sorter = new BubbleSort();
 
-        boolean isAscending = false;
+        boolean isAscending = true;
         sorter.sort(values, isAscending); // ascending
         
         Utils.printArray(values);
