@@ -1,5 +1,6 @@
 /bin
-/.vscode
+.vscode
+.idea
 
 # Compiled class file
 *.class
