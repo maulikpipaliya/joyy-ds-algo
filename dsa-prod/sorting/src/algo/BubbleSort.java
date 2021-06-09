@@ -19,10 +19,10 @@ public class BubbleSort extends Sorter implements Sortable {
         int length = values.length;
         boolean isSorted;
 
-        for (int i = 1; i < length; i++) {
+        for (int i = 0; i < length-1; i++) {
             isSorted = true;
 
-            for (int j = 0; j < length - i; j++) {
+            for (int j = 0; j < length - i - 1; j++) {
 
                 if (isAscending) {
                     if (values[j].compareTo(values[j + 1]) > 0) {

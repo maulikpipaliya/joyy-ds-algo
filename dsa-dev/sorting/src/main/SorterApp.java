@@ -8,7 +8,6 @@
 import util.Utils;
 import interfaces.Sortable;
 import algo.BubbleSort;
-import algo.InsertionSort;
 
 public class SorterApp {
 
@@ -20,13 +19,13 @@ public class SorterApp {
     }
 
     private void run() {
-        sort(new Integer[] { 43,95, 4, 7, 3, 1 });
+        sort(new Integer[] { 10, 4, 43, 5, 57, 91, 45, 9, 7 });
     }
 
     private <T extends Comparable<? super T>> void sort(T[] values) {
         Sortable sorter = new BubbleSort();
 
-        boolean isAscending = false;
+        boolean isAscending = true;
         sorter.sort(values, isAscending); // ascending
         
         Utils.printArray(values);

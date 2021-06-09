@@ -4,3 +4,7 @@ sorting
 cd .\dsa-dev\sorting\src\
 javac -d ..\bin\ .\abstracts\*.java .\interfaces\*.java .\algo\*.java .\main\*.java .\util\*.java
 java -cp ..\bin\ .\main\SorterApp.java
+
+
+
+javac -d ..\bin\ .\abstracts\*.java .\interfaces\*.java .\algo\*.java .\main\*.java .\util\*.java ; java -cp ..\bin\ .\main\SorterApp.java
