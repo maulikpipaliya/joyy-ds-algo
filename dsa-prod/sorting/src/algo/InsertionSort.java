@@ -15,22 +15,27 @@ public class InsertionSort extends Sorter implements Sortable {
     @Override
     public <T extends Comparable<? super T>> void sort(T[] values, boolean isAscending) {
         int n = values.length;
-        T value;
-        int hole;
-
-        System.out.println(Arrays.toString(values));
-
+        T insertItem;
+        int insertItemIndex;
 
         for (int i = 1; i <= n - 1; i++) {
-            hole = i;
-            value = values[i];
-            System.out.println(hole);
-            while (hole >= 1 && values[hole - 1].compareTo(value) > 0) {
-                //shifting right side
-                values[hole] = values[hole - 1];
-                hole--;
+            insertItemIndex = i;
+            insertItem = values[i];
+
+            if (isAscending) {
+                while (insertItemIndex >= 1 && values[insertItemIndex - 1].compareTo(insertItem) > 0) {
+
+                    values[insertItemIndex] = values[insertItemIndex - 1];
+                    insertItemIndex--;
+                }
+            } else {
+                while (insertItemIndex >= 1 && values[insertItemIndex - 1].compareTo(insertItem) < 0) {
+                    values[insertItemIndex] = values[insertItemIndex - 1];
+                    insertItemIndex--;
+                }
             }
-            values[hole] = value;
+            values[insertItemIndex] = insertItem;
+
         }
 
     }
