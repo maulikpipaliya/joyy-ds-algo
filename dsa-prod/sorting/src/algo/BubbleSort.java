@@ -5,9 +5,6 @@ import java.util.Comparator;
 import abstracts.Sorter;
 import interfaces.Sortable;
 import util.Utils;
-
-import java.util.logging.Logger;
-
 /**
  * Worst case complexity : O(n^2) Best case complexity (Improved version) : O(n)
  * Worst case space complexity : O(1) auxiliary

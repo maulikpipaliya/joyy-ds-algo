@@ -7,8 +7,7 @@
 
 import util.Utils;
 import interfaces.Sortable;
-import algo.BubbleSort; 
-import algo.SelectionSort;
+import algo.*; 
 
 public class SorterApp {
 
@@ -23,9 +22,9 @@ public class SorterApp {
     }
 
     private <T extends Comparable<? super T>> void sort(T[] values) {
-        Sortable sorter = new SelectionSort();
+        Sortable sorter = new InsertionSort();
 
-        boolean isAscending = false;
+        boolean isAscending = true;
         sorter.sort(values, isAscending); // ascending
         
         Utils.printArray(values);

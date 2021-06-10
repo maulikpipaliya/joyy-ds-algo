@@ -52,7 +52,7 @@ public class BubbleSort extends Sorter implements Sortable {
                     System.out.print("\n\tSub iteration " + (j + 1) + " : ");
 
                     if (values[j].compareTo(values[j + 1]) < 0) {
-                        System.out.print("(" + values[j] + "," + values[j + 1] + ") ==> ");
+                    
 
                         isSorted = false;
                         swap(values, j + 1, j);
