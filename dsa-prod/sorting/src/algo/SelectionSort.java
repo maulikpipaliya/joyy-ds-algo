@@ -8,7 +8,10 @@ import jdk.jshell.execution.Util;
 import util.Utils;
 
 /**
- * 
+ *  1. Find the minimum value in the list
+    2. Swap it with the value in the current position
+    3. Repeat this process for all the elements until the entire array is sorted
+This algorithm is called SelectionSort since it repeatedly selects the smallest element
  */
 
 public class SelectionSort extends Sorter implements Sortable {
@@ -16,13 +19,7 @@ public class SelectionSort extends Sorter implements Sortable {
     public <T extends Comparable<? super T>> void sort(T[] values, boolean isAscending) {
         int idx;
 
-        String minMax = isAscending ? "Minimum" : "Maximum";
-
-        System.out.println("Selecting " + minMax + " in each pass");
-
         for (int i = 0; i < values.length - 1; i++) {
-            System.out.println("\nPass " + (i + 1));
-            Utils.printArray(values);
             idx = i;
             for (int j = i + 1; j < values.length; j++) {
                 if (isAscending) {
@@ -33,14 +30,9 @@ public class SelectionSort extends Sorter implements Sortable {
                         idx = j;
                 }
             }
-            System.out.println(minMax + " is " + values[idx]);
-            System.out.println("Swap " + values[i] + " and  " + values[idx]);
-            System.out.println("Sorted till index " + i);
             swap(values, i, idx);
-          
-
         }
-        
-        System.out.println("List is ordered");
+     
+
     }
 }

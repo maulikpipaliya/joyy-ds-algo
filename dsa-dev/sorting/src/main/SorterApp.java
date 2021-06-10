@@ -7,14 +7,13 @@
 
 import util.Utils;
 import interfaces.Sortable;
-import algo.BubbleSort;
+import algo.BubbleSort; 
 import algo.SelectionSort;
 
 public class SorterApp {
 
     public static void main(String[] args) {
-        System.out.println("Main");
-
+        // Utils.clearScreen();
         SorterApp app = new SorterApp();
         app.run();
     }
