@@ -1,6 +1,6 @@
 package abstracts;
 
-public abstract class Sorter {
+public abstract class AbstractSorter {
     protected <T> void swap(T[] values, int first, int second) {
         // x = x ^ y ^ (y = x);
         //a[x] = a[x] ^ a[y] ^ (a[y] = a[x]);

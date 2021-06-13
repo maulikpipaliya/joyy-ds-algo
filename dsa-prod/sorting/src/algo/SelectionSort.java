@@ -2,7 +2,7 @@ package algo;
 
 import java.util.Comparator;
 
-import abstracts.Sorter;
+import abstracts.AbstractSorter;
 import interfaces.Sortable;
 import util.Utils;
 
@@ -13,7 +13,7 @@ import util.Utils;
 This algorithm is called SelectionSort since it repeatedly selects the smallest element
  */
 
-public class SelectionSort extends Sorter implements Sortable {
+public class SelectionSort extends AbstractSorter implements Sortable {
     @Override
     public <T extends Comparable<? super T>> void sort(T[] values, boolean isAscending) {
         int idx;
