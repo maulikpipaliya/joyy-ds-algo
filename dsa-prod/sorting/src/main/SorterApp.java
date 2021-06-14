@@ -22,7 +22,7 @@ public class SorterApp {
     }
 
     private <T extends Comparable<? super T>> void sort(T[] values, boolean isAscending) {
-        Sortable sorter = new InsertionSort();
+        Sortable sorter = new ShellSort();
         sorter.sort(values, isAscending); // ascending
         
         Utils.printArray(values);
