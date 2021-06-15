@@ -1,5 +1,7 @@
 package util;
 
+import java.util.*;
+
 /**
  * @author Maulik Pipal public static <T> void printArray(T[] values) { for (int
  *         i = 0; i < values.length; i++) { System.out.print(values[i] + " ");
@@ -16,8 +18,21 @@ public class Utils {
         System.out.println();
     }
 
-    //0, 1, 4, 13, 40, 121, 364, 1093, 3280, 9841, 29524, 88573, 265720, 797161, 2391484, 7174453, 21523360, 64570081, 193710244, 581130733
-    public static int getKnuthSequenceNumber(int n ){
-        return(int) ((Math.pow(3, n) - 1) / 2);
+    public static <T extends Comparable<? super T>> boolean isSorted(T[] values, boolean isAscending) {
+        int n = values.length;
+        if (n == 0 || n == 1)
+            return true;
+
+        if (isAscending) {
+            for (int i = 0; i < n - 1; i++)
+                if (values[i].compareTo(values[i + 1]) > 0)
+                    return false;
+        } else {
+            for (int i = 0; i < n - 1; i++)
+                if (values[i].compareTo(values[i + 1]) < 0)
+                    return false;
+        }
+        return true;
     }
+
 }

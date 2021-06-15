@@ -26,12 +26,12 @@ public class ShellSort extends AbstractSorter implements Sortable {
         int gap = n / 2; // normal shell sequence
         int nComparisons = 0;
 
+        // Knuth Sequence
 
-        //Knuth Sequence
+        // while (gap < values.length / 3) {
+        // gap = 3 * gap + 1;
+        // }
 
-        while (gap < values.length / 3) {
-            gap= 3 * gap + 1;
-        }
         boolean wentToSwap = false;
         while (gap > 0) {
             System.out.println("\n\nGap = " + gap);
@@ -63,12 +63,15 @@ public class ShellSort extends AbstractSorter implements Sortable {
             }
             second = 0;
             first = 0;
-            // gap /= 2;
-            gap = --gap / 3;
+            gap /= 2;
+            // gap = --gap / 3;
         }
-        
+
         nComparisons = nSwaps + nComparisons;
 
+        System.out.println("=========================");
+        System.out.println("is Proper Sorted: " + Utils.isSorted(values, isAscending));
+        System.out.println("=========================");
         System.out.println("Number of Elements    =" + values.length);
         System.out.println("Number of Swaps       =" + nSwaps);
         System.out.println("Number of Comparisons =" + nComparisons);
