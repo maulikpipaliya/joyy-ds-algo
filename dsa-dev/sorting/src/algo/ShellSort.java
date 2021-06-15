@@ -17,34 +17,62 @@ public class ShellSort extends AbstractSorter implements Sortable {
     @Override
     public <T extends Comparable<? super T>> void sort(T[] values, boolean isAscending) {
         final int n = values.length;
-        int gap = (int) Math.floor(n / 2);
-        // System.out.println(gap);
 
-        int startPoint = 0;
-
-        System.out.println("Before sorting\n");
+        System.out.println("Input Array\n");
+        System.out.println("=========================\n");
         Utils.printArray(values);
+        int nSwaps = 0;
+        int first = 0, second = 0;
+        int gap = n / 2; // normal shell sequence
+        int nComparisons = 0;
 
-        while (gap >= 1) {
+
+        //Knuth Sequence
+
+        while (gap < values.length / 3) {
+            gap= 3 * gap + 1;
+        }
+        boolean wentToSwap = false;
+        while (gap > 0) {
             System.out.println("\n\nGap = " + gap);
-            for (int i = startPoint; i < n - gap; i++) {
-                System.out.println("Pass " + (i + 1));
-                System.out.println("\tComparing " + values[i] + " and " + values[i + gap]);
-                if (values[i].compareTo(values[i + gap]) > 0) {
-                    swap(values, i, i + gap);
-                    System.out.println("\t ==>Swapped " + values[i] + " and " + values[i + gap]);
-                }
-            }
-            gap--;
-            // startPoint++;
-            System.out.println();
-            Utils.printArray(values);
-        }
+            while ((second + gap) < n) {
+                int idx1 = first;
+                int idx2 = second + gap;
 
-        if (gap == 0) {
-            Sortable insertionSorter = new InsertionSort();
-            insertionSorter.sort(values, isAscending);
+                System.out.println(values[idx1] + " and " + values[idx2]);
+
+                wentToSwap = false;
+
+                while (values[idx1].compareTo(values[idx2]) > 0) {
+                    wentToSwap = true;
+                    System.out.println("\tSwapped " + values[idx1] + " and " + values[idx2]);
+                    nSwaps++;
+
+                    swap(values, idx1, idx2);
+                    if (idx1 >= gap) {
+                        idx1 = idx1 - gap;
+                        idx2 = idx2 - gap;
+                    }
+                    System.out.println("\t" + Arrays.toString(values));
+
+                }
+                if (!wentToSwap)
+                    nComparisons++;
+                first++;
+                second++;
+            }
+            second = 0;
+            first = 0;
+            // gap /= 2;
+            gap = --gap / 3;
         }
+        
+        nComparisons = nSwaps + nComparisons;
+
+        System.out.println("Number of Elements    =" + values.length);
+        System.out.println("Number of Swaps       =" + nSwaps);
+        System.out.println("Number of Comparisons =" + nComparisons);
 
     }
+
 }

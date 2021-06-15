@@ -9,22 +9,4 @@ public abstract class AbstractSorter {
         values[second] = temp;
     }
 
-    protected <T> boolean isSorted(T[] values, boolean isAscending) {
-
-        int n = values.length;
-        boolean isSorted;
-
-        for (int i = 0; i < n - 1; i++) {
-            isSorted = true;
-            for (int j = 0; j < n - i - 1; j++) {
-                if (isAscending && values[j].compareTo(values[j + 1]) > 0)
-                    return false;
-                if (!isAscending && values[j].compareTo(values[j + 1]) < 0)
-                    return false;
-            }
-            if (isSorted)
-                return true;
-
-        }
-    }
 }
