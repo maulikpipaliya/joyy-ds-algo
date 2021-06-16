@@ -89,13 +89,15 @@ public class MergeSortApp {
         // long[] a = {2, -1, 5, 0, 7, 3, -4, 6};
         // long[] a = {2,4,1,6,8,5,3,7};
         // long[] a = {9,7,3,6,2,1,4,11};
-        int arrayLen = 8;
+        // long[] a = {43,42,40,40,39,38,32,32,31,27,25,21,20,20,18,16,12,8,7,6,4,0};
+        long[] a = {10, 4, 43, 5, 57, 91, 45, 9, 7};
+        int arrayLen = a.length;
 
         MergeSortArray array = new MergeSortArray(arrayLen);
 
-        for (int i = 0; i < arrayLen; i++) {
-            array.insert(new Random().nextInt(10));
-            // array.insert(a[i]);
+        for (int i = 0; i < a.length; i++) {
+            // array.insert(new Random().nextInt(10));
+            array.insert(a[i]);
         }
 
         array.display();

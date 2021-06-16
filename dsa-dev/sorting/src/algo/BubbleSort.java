@@ -9,6 +9,9 @@ import util.Utils;
 import java.util.logging.Logger;
 
 /**
+ * two adjacent elements of a list are first checked and then swapped. 
+ * In case the adjacent elements are in the incorrect order then the process keeps on repeating until a fully sorted list is obtained
+ * 
  * Worst case complexity : O(n^2) 
  * Best case complexity (Improved version) : O(n)
  * Worst case space complexity : O(1) auxiliary

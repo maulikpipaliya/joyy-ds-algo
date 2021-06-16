@@ -8,7 +8,12 @@ import interfaces.Sortable;
 import util.Utils;
 
 /**
- *
+ *  each iteration removes an element from the input list and inserts it into the sorted sublist
+ * 
+ * Worst case complexity is O(n^2)
+ * Best case O(n)
+ * 
+ * Worst case space complexity is O(n^2) total, O(1) auxiliary
  */
 
 public class InsertionSort extends AbstractSorter implements Sortable {

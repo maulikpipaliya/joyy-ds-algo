@@ -10,6 +10,13 @@ import algo.*;
 
 /**
  * ShellSort = diminishing increment sort = n-gap insertion sort
+ * 
+ * makes several passes and uses various gaps between adjacent elements (ending with the gap of 1 or classical insertion sort)
+ * 
+ * Worst case Time Complexity : O( n * log^2(n)) 
+ * Best case -> O(n)
+ * Worst case Space Complexity : O(n)
+ * 
  * https://youtu.be/DV8-AmwW1rw
  */
 

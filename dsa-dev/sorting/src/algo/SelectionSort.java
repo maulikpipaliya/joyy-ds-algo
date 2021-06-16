@@ -7,7 +7,14 @@ import interfaces.Sortable;
 import util.Utils;
 
 /**
+ * selection sort improves on the bubble sort by making only one exchange for every pass through the list
  * 
+ * looks for the smallest (or largest) value as it makes a pass and, after completing the pass, places it in the proper location
+ * 
+ * works well for small files
+ * 
+ * Time Complexity : O(n^2)
+ * Space Complexity : O(1)
  */
 
 public class SelectionSort extends AbstractSorter implements Sortable {
