@@ -1,8 +1,5 @@
 package algo;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 import abstracts.AbstractSorter;
 import interfaces.Sortable;
 import util.Utils;
@@ -12,13 +9,13 @@ import java.util.*;
 
 /**
  *
- * 
+ * Worst case complexity : Θ(n * log n)
  */
 
 public class MergeSort extends AbstractSorter implements Sortable {
 
     int nSwaps = 0, nComparisons = 0;
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T extends Comparable<? super T>> void sort(T[] values, boolean isAscending) {
@@ -26,13 +23,12 @@ public class MergeSort extends AbstractSorter implements Sortable {
         System.out.println("Input Array\n");
         System.out.println("=========================\n");
         Utils.printArray(values);
-        
+
         nComparisons = nSwaps + nComparisons;
 
+        T[] arrayMerged = (T[]) new Comparable[values.length];
 
-        T[] arrayMerged2 = (T[]) new Comparable[values.length];
-
-        makeHalves(arrayMerged2, values, 0, values.length - 1);
+        makeHalves(arrayMerged, values, 0, values.length - 1);
 
         System.out.println("=========================");
         System.out.println("is Proper Sorted: " + Utils.isSorted(values, isAscending));
@@ -43,7 +39,7 @@ public class MergeSort extends AbstractSorter implements Sortable {
 
     }
 
-    public <T extends Comparable<? super T>> void makeHalves(T[] arrayMerged2, T[] values, int leftStart, int rightEnd) {
+    public <T extends Comparable<? super T>> void makeHalves(T[] arrayMerged, T[] values, int leftStart, int rightEnd) {
         System.out.println();
         System.out.print("(" + leftStart + "->" + rightEnd + ") = ");
 
@@ -51,25 +47,24 @@ public class MergeSort extends AbstractSorter implements Sortable {
             System.out.print(values[i] + " ");
         }
 
-        List<T> arrayMerged = new ArrayList<T>();
-
         if (leftStart < rightEnd) {
             int mid = (leftStart + rightEnd) / 2;
-            makeHalves(arrayMerged2, values, leftStart, mid);
-            makeHalves(arrayMerged2, values, mid + 1, rightEnd);
-            sortAndMergeHalves(arrayMerged2, values, leftStart, mid, rightEnd);
+            makeHalves(arrayMerged, values, leftStart, mid);
+            makeHalves(arrayMerged, values, mid + 1, rightEnd);
+            sortAndMergeHalves(arrayMerged, values, leftStart, mid, rightEnd);
         } else {
             return;
         }
     }
 
-    public <T extends Comparable<? super T>> void sortAndMergeHalves( T[] arrayMerged2 , T[] values, int leftStart, int mid, int rightEnd) {
+    public <T extends Comparable<? super T>> void sortAndMergeHalves(T[] arrayMerged, T[] values, int leftStart,
+            int mid, int rightEnd) {
 
         // 3 pointers
         int leftArrayPointer = leftStart;
         int rightArrayPointer = mid + 1;
         int arrayMergedPointer = leftStart;
-        // T[] arrayMerged2 = (T[]) new Comparable[values.length];
+        // T[] arrayMerged = (T[]) new Comparable[values.length];
 
         System.out.println("\n\nMerging subarrays");
 
@@ -89,31 +84,26 @@ public class MergeSort extends AbstractSorter implements Sortable {
         while (leftArrayPointer <= mid && rightArrayPointer <= rightEnd) {
             nComparisons++;
             if (values[leftArrayPointer].compareTo(values[rightArrayPointer]) > 0) {
-                // arrayMerged.add(values[rightArrayPointer++]);
-                arrayMerged2[arrayMergedPointer++] = values[rightArrayPointer++];
+                arrayMerged[arrayMergedPointer++] = values[rightArrayPointer++];
             } else {
-                // arrayMerged.add(values[leftArrayPointer++]);
-                arrayMerged2[arrayMergedPointer++] = values[leftArrayPointer++];
+                arrayMerged[arrayMergedPointer++] = values[leftArrayPointer++];
 
             }
         }
 
         while (leftArrayPointer <= mid) {
-            // arrayMerged.add(values[leftArrayPointer++]);
-            arrayMerged2[arrayMergedPointer++] = values[leftArrayPointer++];
+            arrayMerged[arrayMergedPointer++] = values[leftArrayPointer++];
         }
 
         while (rightArrayPointer <= rightEnd) {
-            // arrayMerged.add(values[rightArrayPointer++]);
-            arrayMerged2[arrayMergedPointer++] = values[rightArrayPointer++];
+            arrayMerged[arrayMergedPointer++] = values[rightArrayPointer++];
         }
 
         for (int i = 0; i < arrayMergedPointer; i++) {
-            // values[i] = arrayMerged.get(i);
-            values[i] = arrayMerged2[i];
+            values[i] = arrayMerged[i];
         }
 
-        System.out.println(Arrays.toString(arrayMerged2));
+        System.out.println(Arrays.toString(arrayMerged));
 
     }
 }

@@ -33,7 +33,7 @@ public class SorterApp {
     }
 
     private <T extends Comparable<? super T>> void sort(T[] values, boolean isAscending) {
-        Sortable sorter = new ShellSort();
+        Sortable sorter = new MergeSort();
 
         System.out.println(sorter.getClass().getSimpleName());
 
