@@ -9,6 +9,9 @@ import java.util.*;
 
 /**
  *
+ * first divides the array into equal halves and then combines them in a sorted manner
+ * 
+ * 
  * Worst case complexity : Θ(n * log n)
  */
 
