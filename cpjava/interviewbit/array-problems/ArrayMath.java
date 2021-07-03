@@ -2,7 +2,8 @@ import java.util.*;
 
 public class ArrayMath {
     public static void main(String[] args) {
-        maximumSumTriplet();
+        // maximumSumTriplet();
+        maxSumContiguousSubarray();
     }
 
     public static void minStepsInInfiniteGrid() {
@@ -162,6 +163,70 @@ public class ArrayMath {
         }
 
         return sum;
+
+    }
+
+    public static void maxSumContiguousSubarray() {
+        ArrayList<Integer> A = new ArrayList<>(List.of(-2, 1, -3, 4, -1, 2, 1, -5, 4));
+        System.out.println(maxSumContiguousSubarraySolution(A));
+    }
+
+    // https://youtu.be/VMtyGnNcdPw
+    // includes Kadane's Algorithm
+    public static int maxSumContiguousSubarraySolution(final List<Integer> A) {
+
+        int maxSum = Integer.MIN_VALUE;
+        int n = A.size();
+
+        // O (n^3)
+        /*
+         * int sum = 0; for (int i = 0; i < n; i++) { for (int j = i; j < n; j++) { sum
+         * = 0; for (int k = i; k < j; k++) { sum += A.get(k); System.out.print(A.get(k)
+         * + " "); } maxSum = Math.max(sum, maxSum); System.out.println(); }
+         * System.out.println(); }
+         * 
+         */
+
+        // ---------------------
+
+        // Prefix Sum Array Method
+
+        // int[] prefixSumArray = new int[n];
+
+        // int prefixSum = 0;
+        // for (int i = 0; i < n; i++) {
+        // prefixSum += A.get(i);
+        // prefixSumArray[i] = prefixSum;
+        // }
+
+        // System.out.println(Arrays.toString(prefixSumArray));
+        // int sum = 0;
+        // for (int i = 0; i < n; i++) {
+        // for (int j = i; j < n; j++) {
+        // System.out.print(prefixSumArray[j] + " - " + prefixSumArray[i]);
+        // sum = prefixSumArray[j] - prefixSumArray[i];
+        // System.out.println(sum);
+        // maxSum = Math.max(sum, maxSum);
+        // System.out.println();
+        // }
+        // // System.out.println();
+        // }
+
+        int maxTillHere = 0;
+
+        for (int i = 0; i < n; i++) {
+            maxTillHere += A.get(i);
+            if (maxTillHere > maxSum) {
+                maxSum = maxTillHere;
+            }
+            if (maxTillHere < 0) {
+                maxTillHere = 0;
+            }
+            System.out.println("maxTillHere = " + maxTillHere);
+            System.out.println("maxSum      = " + maxSum);
+            System.out.println();
+        }
+        return maxSum;
 
     }
 }
