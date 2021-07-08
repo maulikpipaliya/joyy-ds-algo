@@ -3,7 +3,11 @@ import java.util.*;
 public class ArrayMath {
     public static void main(String[] args) {
         // maximumSumTriplet();
-        maxSumContiguousSubarray();
+
+        // addOneToNumber();
+        // maximumAbsoluteDifference();
+        // partitions();
+        maximumAreaOfTriangle();
     }
 
     public static void minStepsInInfiniteGrid() {
@@ -179,13 +183,20 @@ public class ArrayMath {
         int n = A.size();
 
         // O (n^3)
-        /*
-         * int sum = 0; for (int i = 0; i < n; i++) { for (int j = i; j < n; j++) { sum
-         * = 0; for (int k = i; k < j; k++) { sum += A.get(k); System.out.print(A.get(k)
-         * + " "); } maxSum = Math.max(sum, maxSum); System.out.println(); }
-         * System.out.println(); }
-         * 
-         */
+
+        // int sum = 0;
+        // for (int i = 0; i < n; i++) {
+        // for (int j = i; j < n; j++) {
+        // sum = 0;
+        // for (int k = i; k < j; k++) {
+        // sum += A.get(k);
+        // System.out.print(A.get(k) + " ");
+        // }
+        // maxSum = Math.max(sum, maxSum);
+        // System.out.println();
+        // }
+        // System.out.println();
+        // }
 
         // ---------------------
 
@@ -212,21 +223,238 @@ public class ArrayMath {
         // // System.out.println();
         // }
 
-        int maxTillHere = 0;
+        int localMax = A.get(0);
+        maxSum = A.get(0);
 
-        for (int i = 0; i < n; i++) {
-            maxTillHere += A.get(i);
-            if (maxTillHere > maxSum) {
-                maxSum = maxTillHere;
-            }
-            if (maxTillHere < 0) {
-                maxTillHere = 0;
-            }
-            System.out.println("maxTillHere = " + maxTillHere);
-            System.out.println("maxSum      = " + maxSum);
-            System.out.println();
+        int tempSum1 = 0;
+        for (int i = 1; i < n; i++) {
+            tempSum1 = localMax + A.get(i);
+            localMax = Math.max(tempSum1, A.get(i));
+            maxSum = Math.max(localMax, maxSum);
         }
         return maxSum;
 
     }
+
+    public static void addOneToNumber() {
+        ArrayList<Integer> A = new ArrayList<>(List.of(0, 6, 0, 6, 4, 8, 8, 1));
+        addOneToNumberSolution(A);
+    }
+
+    public static ArrayList<Integer> addOneToNumberSolution(ArrayList<Integer> A) {
+
+        int n = A.size();
+        final int addValue = 1;
+        int carry = 1;
+        int i = n - 1;
+
+        while (carry != 0 && i >= 0) {
+            if (A.get(i) == 9) {
+                A.set(i, 0);
+                carry = 1;
+            } else {
+                A.set(i, A.get(i) + 1);
+                carry = 0;
+            }
+            i--;
+        }
+
+        if (carry == 1) {
+            A.add(0, carry);
+        }
+
+        i = 0;
+        System.out.println(A);
+        while (A.get(i) == 0) {
+            A.remove((int) i);
+            System.out.println(A);
+        }
+
+        return A;
+    }
+
+    public static void maximumAbsoluteDifference() {
+        ArrayList<Integer> A = new ArrayList<>(List.of(1, 3, -1));
+        System.out.println(maximumAbsoluteDifferenceSolution(A));
+    }
+
+    // https://youtu.be/tN8wEDNZKF4
+    public static int maximumAbsoluteDifferenceSolution(ArrayList<Integer> A) {
+        int maxAk1 = Integer.MIN_VALUE;
+        int minAk1 = Integer.MAX_VALUE;
+        int maxAk2 = Integer.MIN_VALUE;
+        int minAk2 = Integer.MAX_VALUE;
+
+        for (int i = 0; i < A.size(); i++) {
+            maxAk1 = Math.max(A.get(i) + i, maxAk1);
+
+            minAk1 = Math.min(A.get(i) + i, minAk1);
+            maxAk2 = Math.max(A.get(i) - i, maxAk2);
+            minAk2 = Math.min(A.get(i) - i, minAk2);
+        }
+
+        return Math.max(maxAk1 - minAk1, maxAk2 - minAk2);
+    }
+
+    public static void partitions() {
+        ArrayList<Integer> A = new ArrayList<>(List.of(0, 0, 0, 0, 0, 0, 0, 0, 0));
+        System.out.println(partitionsSolution(9, A));
+    }
+
+    public static int partitionsSolution(int size, ArrayList<Integer> B) {
+        int n = size;
+        int nWays = 0;
+        int sum = B.stream().mapToInt(i -> i).sum();
+        int nFirstBar = 0;
+        int nLastBar = 0;
+        if (sum % 3 == 0) {
+            int divSum = sum / 3;
+            int[] prefixSumArray = new int[n];
+            int[] suffixSumArray = new int[n];
+            prefixSumArray[0] = B.get(0);
+            suffixSumArray[n - 1] = B.get(n - 1);
+
+            // if (suffixSumArray[n - 1] == divSum)
+            // nLastBar++;
+            // if (prefixSumArray[0] == divSum) {
+            // nFirstBar++;
+            // }
+
+            List<Integer> prefix = new ArrayList<Integer>();
+            List<Integer> suffix = new ArrayList<Integer>();
+
+            int tempSum1 = 0;
+            int tempSum2 = 0;
+            int i = 0;
+            for (i = 0; i < n; i++) {
+                prefixSumArray[i] = prefixSumArray[i - 1] + B.get(i);
+                // suffixSumArray[n - i - 1] = suffixSumArray[n - i] + B.get(n - i - 1);
+                tempSum1 += B.get(i);
+                if (tempSum1 == divSum) {
+                    prefix.add(i);
+                }
+                tempSum2 += B.get(n - i - 1);
+                if (tempSum2 == divSum) {
+                    suffix.add(n - i - 1);
+                }
+
+            }
+            System.out.println(prefix);
+            System.out.println(suffix);
+
+            for (i = 0; i < prefix.size(); i++) {
+                for (int j = 0; j < suffix.size(); j++) {
+                    // int mainSum = 0;
+                    // int x = 0;
+                    // // System.out.println(B.get(suffix.get(j)));
+                    // for (int k =prefix.get(i)+1; k < suffix.get(j); k++) {
+                    // mainSum += B.get(k);
+                    // // System.out.println("ms" + mainSum);
+                    // x = 1;
+                    // }
+                    // // System.out.println("ms" + mainSum);
+                    // if (mainSum == divSum && x==1) {
+                    // nWays++;
+                    // }
+
+                }
+            }
+
+            // i = 0;
+            // while (i < n-1) {
+            // if (prefixSumArray[i] == divSum) {
+            // nFirstBar++;
+            // if (prefixSumArray[i + 1] != divSum) {
+            // break;
+            // }
+            // }
+            // i++;
+            // }
+            // i = n-1;
+            // while (i > 1) {
+            // if (suffixSumArray[i] == divSum) {
+            // nLastBar++;
+            // if (suffixSumArray[i - 1] != divSum) {
+            // break;
+            // }
+            // }
+            // i--;
+            // }
+
+            // System.out.println(Arrays.toString(prefix));
+            // System.out.println(Arrays.toString(suffix));
+            System.out.println("divSum" + divSum);
+            System.out.println("nWays" + nWays);
+            System.out.println(prefix);
+            System.out.println(suffix);
+            System.out.println(nFirstBar);
+            System.out.println(nLastBar);
+        }
+
+        return nWays;
+
+    }
+
+    public static void maximumAreaOfTriangle() {
+        ArrayList<String> A = new ArrayList<>(List.of("rrrrr", "rrrrg", "rrrrr", "bbbbb"));
+        System.out.println(maximumAreaOfTriangleSolution(A));
+
+    }
+
+    public static int maximumAreaOfTriangleSolution(ArrayList<String> A) {
+        int maxArea = 0;
+
+        int r = A.size();
+        int c = A.get(0).length();
+
+        System.out.println(r);
+        System.out.println(c);
+
+        int start = 0;
+        int end = 0;
+        final char[] colors = { 'r', 'g', 'b' };
+        final boolean[] colorsTaken = { false, false, false };
+        int maxColumnLength = r;
+
+        for (int i = 0; i < r; i++) {
+            if (A.get(i).charAt(0) != A.get(r - i - 1).charAt(0)) {
+                start = i;
+                end = r - i - 1;
+ 
+                // colorsTaken[start] = true;
+                // colorsTaken[end] = true;
+
+                maxColumnLength = r - i;
+                break;
+            }
+        }
+
+        System.out.println("maxColumnLength" + maxColumnLength);
+        int rightI = 0;
+        int rightJ = 0;
+        for (int i = r - 1; i >= 0; i--) {
+            for (int j = c - 1; j >= 0; j--) {
+                if (A.get(i).charAt(j) == 'g') {
+                    rightI = i;
+                    rightJ = j;
+                }
+            }
+        }
+
+        int x1 = 0, x2 =0, x3 = rightJ, y1 = start, y2 = end, y3=rightI;  
+
+        double area =  (1/2) * (x1 * (y2-y3 ) + x2* (y3- y1 ) + x3*(y1- y2));
+
+
+
+        System.out.println("start" + start);
+        System.out.println("end" + end);
+        System.out.println("rightI" + rightI);
+        System.out.println("rightJ" + rightJ);
+        System.out.println("area" +area);
+
+
+        return maxArea;
+    }
+
 }

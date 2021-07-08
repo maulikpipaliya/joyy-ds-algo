@@ -1,2 +1,3 @@
-ere = " + maxTillHere);
-            System.out.println("maxSum      = " + maxSum);
+
+    public static int maximumAreaOfTriangleSolution(ArrayList<String> A) {
+        int maxArea = 0;
