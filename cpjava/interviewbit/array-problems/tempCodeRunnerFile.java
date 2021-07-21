@@ -1,3 +1,5 @@
-
-    public static int maximumAreaOfTriangleSolution(ArrayList<String> A) {
-        int maxArea = 0;
+public static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
