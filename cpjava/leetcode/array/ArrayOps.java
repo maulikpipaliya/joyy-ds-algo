@@ -35,7 +35,6 @@ public class ArrayOps {
 
     }
 
-
     public static int[] plusOne(int[] digits) {
         int n = digits.length;
 
@@ -51,6 +50,49 @@ public class ArrayOps {
         int[] newDigits = new int[digits.length + 1];
         newDigits[0] = 1;
         return newDigits;
+    }
+
+    public static void moveZeroes(int[] nums) {
+        int n = nums.length;
+        int zeroCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0)
+                zeroCount++;
+            else
+                nums[i - zeroCount] = nums[i];
+
+            if (i >= zeroCount && zeroCount != 0)
+                nums[i] = 0;
+        }
+    }
+
+    public static int[] twoSum(int[] nums, int target) {
+        int n = nums.length;
+        int[] ans = new int[2];
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                sum = nums[i] + nums[j];
+                if (sum == target) {
+                    ans[0] = i;
+                    ans[1] = j;
+                    return ans;
+                }
+
+                sum = nums[n - i - 1] + nums[j];
+                if (sum == target) {
+                    ans[0] = n - i - 1;
+                    ans[1] = j;
+                    return ans;
+                }
+            }
+
+        }
+
+        // System.out.print(Arrays.toString(sumArray));
+        // int[] ans = new int[2];
+        return ans;
     }
 
 }
