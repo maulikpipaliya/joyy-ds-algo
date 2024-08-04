@@ -6,8 +6,7 @@ class Solution {
         for(int i=0;i<len;i++){
             map.put(nums[i], i);   
         }
-        
-        System.out.println(map);
+    
         
         for(int i=0;i<len;i++){
             Integer x = target - nums[i];
